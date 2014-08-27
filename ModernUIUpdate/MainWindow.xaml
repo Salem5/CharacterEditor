@@ -1,0 +1,82 @@
+﻿<mui:ModernWindow x:Class="CharacterEditor.MainWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+                  xmlns:vm="clr-namespace:CharacterEditor.ViewModels"
+                  xmlns:local="clr-namespace:CharacterEditor"
+                  Title="Project Beta Character Editor" IsTitleVisible="True"
+                  Loaded="ModernWindow_Loaded"
+                  ContentSource="/Pages/ProjectAndCharacterSelectionPage.xaml" x:Name="window">
+    <mui:ModernWindow.LogoData>
+        <StreamGeometry>
+            m 418.20316 405.86456 c 0 56.90497 -46.13059 103.03556 -103.03556 103.03556 -56.90497 0 -103.03556 -46.13059 -103.03556 -103.03556 0 -56.90497 46.13059 -103.03556 103.03556 -103.03556 56.90497 0 103.03556 46.13059 103.03556 103.03556 z m 137.38073 -46.46704 c 0 116.0415 -94.07022 210.11173 -210.11172 210.11173 -116.0415 0 -210.11173 -94.07023 -210.11173 -210.11173 0 -116.0415 94.07023 -210.11172 210.11173 -210.11172 116.0415 0 210.11172 94.07022 210.11172 210.11172 z m -44.37155 -1.19753 c 48.21627 -174.66771 119.82084 -85.61179 127.61009 -59.8923 l 0.50876 6.30281 C 631.27587 281.3651 558.86943 199.76608 511.7211 364.5028 z M 634.2674 95.809263 c 0 0 -147.99644 121.842157 48.43809 133.157977 l 7.09296 -2.17685 C 501.3089 214.51505 642.45243 93.500523 641.36036 93.632413 z M 430.15631 177.90042 c 0 0 138.77508 62.64904 113.08272 -104.920657 l -6.20792 -5.1426 C 553.99399 228.94952 422.13277 171.41478 423.94839 172.75782 z m -2.14059 164.80573 c 1.33463 0 127.69478 -112.87405 -17.75194 -136.57513 l -7.35753 1.87674 c 133.94279 23.70108 17.75194 136.57512 17.75194 136.57512 z
+        </StreamGeometry>
+    </mui:ModernWindow.LogoData>
+    <mui:ModernWindow.DataContext>
+        <vm:MainVM/>
+    </mui:ModernWindow.DataContext>
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="[Not selected]"  x:Name="LinkGroupBig">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="character selection" Source="/Pages/ProjectAndCharacterSelectionPage.xaml" />
+                
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+        <mui:LinkGroup DisplayName="settings" GroupName="settings">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="software" Source="/Pages/Settings.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>
+    <mui:ModernWindow.TitleLinks>
+        <mui:Link DisplayName="settings" Source="/Pages/Settings.xaml" />
+    </mui:ModernWindow.TitleLinks>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Button Content="L" HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Row="1" Command="{Binding SelectPreviousCharacterCommand}"/>
+        <Viewbox x:Name="next" IsHitTestVisible="False" Grid.Column="1" Grid.RowSpan="3" Visibility="Hidden">
+            <!--<Viewbox.Resources>
+                <Storyboard x:Key="sb" RepeatBehavior="Forever">
+                    <DoubleAnimation Storyboard.TargetName="myrect" 
+          Storyboard.TargetProperty="Width" From="1" To="350" 
+          Duration="0:0:1" BeginTime="0:0:0"/>
+                    <DoubleAnimation Storyboard.TargetName="myrect" 
+          Storyboard.TargetProperty="Height" From="1" To="250" 
+          Duration="0:0:1" BeginTime="0:0:1"/>
+                    <DoubleAnimation Storyboard.TargetName="myrect" 
+          Storyboard.TargetProperty="Height" From="250" To="1" 
+          Duration="0:0:1" BeginTime="0:0:2"/>
+                    <DoubleAnimation Storyboard.TargetName="myrect" 
+          Storyboard.TargetProperty="Width" From="350" To="1" 
+          Duration="0:0:1" BeginTime="0:0:3"/>
+                </Storyboard>
+            </Viewbox.Resources>-->
+            <Image Source="Material/kachelnWHB.png"/>
+            <!--<Viewbox.Triggers>
+                <EventTrigger RoutedEvent="" SourceName="window">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Duration="0:0:1"
+                    Storyboard.TargetName="MyBorder"
+                    Storyboard.TargetProperty="Color"
+                    To="Gray" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Viewbox.Triggers>-->
+        </Viewbox>
+        <Button Content="R" HorizontalAlignment="Right" VerticalAlignment="Stretch"  Grid.Row="1" Grid.Column="2"  Command="{Binding SelectNextCharacterCommand}"/>
+        
+        <ProgressBar IsIndeterminate="{Binding SelectedProject.SelectedCharacter.IsDirty}"  VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="3" />        
+    </Grid>
+</mui:ModernWindow>

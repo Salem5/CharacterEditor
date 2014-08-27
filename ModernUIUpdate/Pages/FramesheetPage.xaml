@@ -1,0 +1,185 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:content="clr-namespace:CharacterEditor.Content"
+    xmlns:vm="clr-namespace:CharacterEditor.ViewModels"
+             xmlns:CharacterEditor="clr-namespace:CharacterEditor" xmlns:Helper="clr-namespace:CharacterEditor.Helper" x:Name="userControl" x:Class="CharacterEditor.Pages.FramesheetPage"
+    Loaded="userControl_Loaded"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <mui:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Helper:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:FrameSheetVM/>
+    </UserControl.DataContext>
+    <Grid Style="{StaticResource ContentRoot}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <xctk:Zoombox DataContext="{Binding SelectedProject.SelectedCharacter.FrameSheet}">
+                <xctk:Zoombox.Background>
+                    <ImageBrush ImageSource="/Material/kachelnWHB.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="100,100,100,100"/>
+                </xctk:Zoombox.Background>
+                <Canvas x:Name="canvas" ClipToBounds="True" Height="{Binding ActualHeight, ElementName=imageHost, Mode=OneWay}" Width="{Binding ActualWidth, ElementName=imageHost, Mode=OneWay}" MouseRightButtonDown="canvas_MouseRightButtonDown" >
+                    <Image Canvas.Left="0" x:Name="imageHost" RenderOptions.BitmapScalingMode="NearestNeighbor" Source="{Binding Mode=OneWay}" />
+                </Canvas>
+            </xctk:Zoombox>
+            <mui:ModernButton EllipseStrokeThickness="3" IconWidth="20" IconHeight="20" EllipseDiameter="30" x:Name="addFramesheetButton" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z " Command="{Binding ImportFrameSheetCommand}" />
+            <mui:ModernButton EllipseStrokeThickness="3" Grid.Column="1" IconWidth="20" IconHeight="20" EllipseDiameter="30" x:Name="showSheetInfoButton" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="0" IconData="F1 M 227.738,244.76C 227.078,244.76 226.516,244.535 226.054,244.085C 225.591,243.635 225.36,243.065 225.36,242.375C 225.36,241.68 225.591,241.104 226.054,240.646C 226.516,240.189 227.078,239.96 227.738,239.96C 228.413,239.96 228.985,240.189 229.455,240.646C 229.925,241.104 230.16,241.68 230.16,242.375C 230.16,243.035 229.925,243.598 229.455,244.063C 228.985,244.527 228.413,244.76 227.738,244.76 Z M 229.68,275L 225.84,275L 225.84,251L 229.68,251L 229.68,275 Z  " Click="showSheetInfoButton_Click" />
+            <Popup PlacementTarget="{Binding ElementName=showSheetInfoButton}" x:Name="showSheetInfoPopup"  StaysOpen="False" Width="200" >
+                <Border Background="{DynamicResource WindowBackground}" BorderBrush="{DynamicResource WindowBorder}" BorderThickness="1">
+                    <StackPanel >
+                        <!--<TextBlock Margin="5">
+                            <Run Text="Width: "/>
+                            <Run Text="{Binding SelectedProject.SelectedCharacter.FrameSheet.PixelWidth}"/>
+                        </TextBlock>
+                        <TextBlock Margin="5">
+                            <Run Text="Height: "/>
+                            <Run Text="{Binding SelectedProject.SelectedCharacter.FrameSheet.PixelHeight}"/>
+                        </TextBlock>-->
+                    </StackPanel>
+                </Border>
+            </Popup>
+        </Grid>
+        <Grid Grid.Column="1" x:Name="MainPropertyGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="150"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Frame Settings" Grid.Row="0" Margin="5" Style="{DynamicResource Emphasis}" />
+            <Grid Grid.Row="1"  Margin="5" x:Name="FrameSettingsGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  x:Name="frameSettingsColumn0Width" Width="Auto"/>
+                    <ColumnDefinition x:Name="frameSettingsColumn1Width" Width="6*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Frame Width" Margin="5"/>
+                <xctk:IntegerUpDown Grid.Column="1" Margin="5" Value="{Binding SelectedProject.SelectedCharacter.FrameWidth}"/>
+                <TextBlock Text="Frame Height" Grid.Row="1" Margin="5"/>
+                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Margin="5" Value="{Binding SelectedProject.SelectedCharacter.FrameHeight}"/>
+                <TextBlock Text="Margin Settings" Grid.Row="2" Style="{DynamicResource Emphasis}" />
+                <CheckBox Content="Show" Grid.Column="1" Margin="0" Grid.Row="2" IsChecked="{Binding HideMargins}" />
+                <Grid Grid.ColumnSpan="2"  Grid.Row="3" Visibility="{Binding HideMargins, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Top" Margin="5" Grid.Row="0"/>
+                <xctk:IntegerUpDown Grid.Column="1"  Grid.Row="0" Margin="5" Value="{Binding SelectedProject.SelectedCharacter.UpperMargin}"/>
+                <TextBlock Text="Right" Grid.Row="1" Margin="5"/>
+                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Margin="5" Value="{Binding SelectedProject.SelectedCharacter.RightMargin}"/>
+                <TextBlock Text="Bottom" Grid.Row="2"  Margin="5"/>
+                <xctk:IntegerUpDown Grid.Column="1"  Grid.Row="2" Margin="5" Value="{Binding SelectedProject.SelectedCharacter.BottomMargin}"/>
+                <TextBlock Text="Left" Grid.Row="3" Margin="5"/>
+                <xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Margin="5" Value="{Binding SelectedProject.SelectedCharacter.LeftMargin}"/>
+            </Grid>
+        </Grid>
+        <Rectangle Grid.Row="2" HorizontalAlignment="Stretch" Stroke="{DynamicResource WindowBorder}" StrokeThickness="3" Margin="5" VerticalAlignment="Top"/>
+        <TextBlock Text="Animation List" Grid.Row="3" Margin="5" Style="{DynamicResource Emphasis}" />
+        <ListView Grid.Row="4" Grid.Column="0"  Margin="5" ItemsSource="{Binding SelectedProject.SelectedCharacter.AnimationCollection}" SelectedItem="{Binding SelectedProject.SelectedCharacter.SelectedAnimation}" x:Name="animationListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Rectangle Grid.Row="5" HorizontalAlignment="Stretch" Stroke="{DynamicResource WindowBorder}" StrokeThickness="3" Margin="5" VerticalAlignment="Top"/>
+        <TextBlock Text="Animation Settings" Grid.Row="6" Margin="5" Style="{DynamicResource Emphasis}" />
+        <Grid Grid.Row="7"  Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <mui:ModernButton x:Name="addAnimationButton" Grid.Row="0" IconData="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z " Click="addAnimationButton_Click"/>
+            <Popup PlacementTarget="{Binding ElementName=addAnimationButton}" x:Name="addAnimationPopup"  StaysOpen="False" Width="200" >
+                <Border Background="{DynamicResource WindowBackground}" BorderBrush="{DynamicResource WindowBorder}" BorderThickness="1">
+                    <StackPanel >
+                        <TextBlock Text="Name" Margin="5"/>
+                        <TextBox Text="{Binding AnimationNameField, UpdateSourceTrigger=PropertyChanged}" Margin="5" x:Name="newAnimationTitle" />
+                        <Button Content="Add" HorizontalAlignment="Right" Margin="5"  Command="{Binding CreateSimpleAnimationCommand}" x:Name="addAnimationConfirmButton" Click="addAnimationConfirmButton_Click"/>
+                    </StackPanel>
+                </Border>
+            </Popup>
+            <mui:ModernButton Grid.Column="1" HorizontalAlignment="Left" x:Name="deleteAnimationButton" Grid.Row="0" IconData="F1 M 302.326,209.254L 289.366,209.254L 289.366,206.374L 302.325,206.374L 302.326,209.254 Z " Click="deleteAnimationButton_Click" IsEnabled="{Binding SelectedItem, Converter={StaticResource NullToBooleanConverter}, ElementName=animationListView}"/>
+            <Popup PlacementTarget="{Binding ElementName=deleteAnimationButton}" x:Name="deleteAnimationPopup"  StaysOpen="False" Width="200" Grid.ColumnSpan="3" Margin="0,0,40,0" >
+                <Border Background="{DynamicResource WindowBackground}" BorderBrush="{DynamicResource WindowBorder}" BorderThickness="1">
+                    <StackPanel >
+                        <TextBlock Margin="5" Text="Really delete following animation?" />
+                        <TextBlock Text="{Binding SelectedItem.Name, ElementName=animationListView}" Margin="5"/>
+                        <Button Content="Jupp" HorizontalAlignment="Right" Margin="5" x:Name="deleteAnimationConfirmButton"  Command="{Binding DeleteAnimationCommand}"  Click="deleteAnimationConfirmButton_Click"/>
+                    </StackPanel>
+                </Border>
+            </Popup>
+            <TextBlock x:Name="textBlockStartIndex" Grid.Row="1" Text="start index" Grid.ColumnSpan="2"/>
+            <TextBlock Grid.Row="2" Text="{Binding Value, ElementName=sliderStartIndex}" />
+            <Slider Grid.Row="2" Grid.Column="1" x:Name="sliderStartIndex" Minimum="0" Maximum="{Binding MaxPossibleFrame}"  SmallChange="1" LargeChange="10" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding SelectedProject.SelectedCharacter.SelectedAnimation.StartIndex}"  IsEnabled="{Binding SelectedProject.SelectedCharacter.SelectedAnimation, Converter={StaticResource NullToBooleanConverter}}"/>
+            <TextBlock x:Name="textBlockEndIndex" Grid.Row="3" Text="end index" Grid.ColumnSpan="2"/>
+            <TextBlock Grid.Row="4"  Text="{Binding Value, ElementName=sliderEndIndex}" />
+            <Slider Grid.Row="4" Grid.Column="1" x:Name="sliderEndIndex" Minimum="0" Maximum="{Binding MaxPossibleFrame}"  SmallChange="1" LargeChange="10"  TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding SelectedProject.SelectedCharacter.SelectedAnimation.EndIndex}" IsEnabled="{Binding SelectedProject.SelectedCharacter.SelectedAnimation, Converter={StaticResource NullToBooleanConverter}}"/>
+            <TextBlock x:Name="textBlockSpeed" Grid.Row="5" Text="speed" Grid.ColumnSpan="2"/>
+            <xctk:IntegerUpDown  Grid.Row="6"  Text="{Binding Value, ElementName=sliderSpeedx, UpdateSourceTrigger=PropertyChanged}"  IsEnabled="{Binding SelectedProject.SelectedCharacter.SelectedAnimation, Converter={StaticResource NullToBooleanConverter}}"/>
+            <Slider Grid.Row="6" Grid.Column="1" x:Name="sliderSpeedx" Minimum="1" Maximum="1000"  SmallChange="1" LargeChange="100"  TickFrequency="10" IsSnapToTickEnabled="True" Value="{Binding SelectedProject.SelectedCharacter.SelectedAnimation.Speed}" IsEnabled="{Binding SelectedProject.SelectedCharacter.SelectedAnimation, Converter={StaticResource NullToBooleanConverter}}"/>
+            <TextBlock x:Name="textBlockBounce" Grid.Row="7" Text="bounce"/>
+            <TextBlock x:Name="textBlockLoop" Grid.Row="7" Grid.Column="1" Text="loop" />
+            <CheckBox Grid.Row="8" Grid.Column="0" IsChecked="{Binding SelectedProject.SelectedCharacter.SelectedAnimation.Bounce}"  IsEnabled="{Binding SelectedProject.SelectedCharacter.SelectedAnimation, Converter={StaticResource NullToBooleanConverter}}"/>
+            <CheckBox Grid.Row="8" Grid.Column="1" IsChecked="{Binding SelectedProject.SelectedCharacter.SelectedAnimation.Loop}" IsEnabled="{Binding SelectedProject.SelectedCharacter.SelectedAnimation, Converter={StaticResource NullToBooleanConverter}}"/>
+        </Grid>
+        <Rectangle Grid.Row="8" HorizontalAlignment="Stretch" Stroke="{DynamicResource WindowBorder}" StrokeThickness="3" Margin="5" VerticalAlignment="Top"/>
+        <TextBlock Text="Frame Preview" Grid.Row="9" Style="{DynamicResource Emphasis}" Margin="5"/>
+
+        <Grid  Grid.Row="10" Margin="10">
+            <Grid.Background>
+                <ImageBrush ImageSource="/Material/kachelnWHB.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="100,100,100,100"/>
+            </Grid.Background>
+            <Viewbox Stretch="Uniform" x:Name="previewViewbox">
+                <Image x:Name="previewImage" RenderOptions.BitmapScalingMode="NearestNeighbor" Source="/CharacterEditor;component/Material/kachelnWHB.png" MouseLeftButtonDown="previewImage_MouseLeftButtonDown" />
+            </Viewbox>
+        </Grid>
+
+    </Grid>
+
+    </Grid>
+</UserControl>

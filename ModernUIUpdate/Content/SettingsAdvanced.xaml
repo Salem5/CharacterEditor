@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="CharacterEditor.Content.SettingsAdvanced"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ScrollViewer Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+            <StackPanel x:Name="Panel" MinWidth="150">
+                <TextBlock Text="ADVANCED" Style="{StaticResource Heading2}" Margin="0,0,0,8" />
+                
+                <Grid HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition MinWidth="120"/>
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="Base Path:" VerticalAlignment="Center" Margin="0,0,16,0" />
+                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding DocumentsPath}"/>
+                    <mui:ModernButton Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" x:Name="deleteAnimationButton" Command="{Binding ChangeDefaultPath}" 
+                                      IconData="M 60.0255,78.2264C 59.3005,78.2264 58.683,77.9676 58.173,77.4501C 57.663,76.9326 57.408,76.3164 57.408,75.6014C 57.408,74.8814 57.663,74.2589 58.173,73.7339C 58.683,73.2089 59.3005,72.9464 60.0255,72.9464C 60.7655,72.9464 61.3942,73.2089 61.9117,73.7339C 62.4292,74.2589 62.688,74.8814 62.688,75.6014C 62.688,76.3164 62.4292,76.9326 61.9117,77.4501C 61.3942,77.9676 60.7655,78.2264 60.0255,78.2264 Z M 70.5855,78.2264C 69.8605,78.2264 69.243,77.9677 68.733,77.4501C 68.223,76.9326 67.968,76.3164 67.968,75.6014C 67.968,74.8814 68.223,74.2589 68.733,73.7339C 69.243,73.2089 69.8605,72.9464 70.5855,72.9464C 71.3255,72.9464 71.9542,73.2089 72.4717,73.7339C 72.9892,74.2589 73.248,74.8814 73.248,75.6014C 73.248,76.3164 72.9892,76.9326 72.4717,77.4501C 71.9542,77.9677 71.3255,78.2264 70.5855,78.2264 Z M 81.1455,78.2264C 80.4205,78.2264 79.803,77.9677 79.293,77.4501C 78.783,76.9326 78.528,76.3164 78.528,75.6014C 78.528,74.8814 78.783,74.2589 79.293,73.7339C 79.803,73.2089 80.4205,72.9464 81.1455,72.9464C 81.8855,72.9464 82.5142,73.2089 83.0317,73.7339C 83.5492,74.2589 83.808,74.8814 83.808,75.6014C 83.808,76.3164 83.5492,76.9326 83.0317,77.4501C 82.5142,77.9677 81.8855,78.2264 81.1455,78.2264 Z " />
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

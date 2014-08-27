@@ -1,0 +1,23 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:content="clr-namespace:CharacterEditor.Content"
+    xmlns:vm="clr-namespace:CharacterEditor.ViewModels"
+             xmlns:CharacterEditor="clr-namespace:CharacterEditor" xmlns:Helper="clr-namespace:CharacterEditor.Helper" x:Name="userControl" x:Class="CharacterEditor.Pages.AudioPage"
+    Loaded="userControl_Loaded"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Helper:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:FrameSheetVM/>
+    </UserControl.DataContext>
+    <Grid Style="{StaticResource ContentRoot}">
+        
+    </Grid>
+</UserControl>
