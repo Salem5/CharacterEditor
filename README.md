@@ -1,4 +1,4 @@
 CharacterEditor
 ===============
 
-Sadly an older build lacking animations thumbnail preview and more.
+A character editor I build for 2D games. It supports project and character file creation and also animations with framesheets.
